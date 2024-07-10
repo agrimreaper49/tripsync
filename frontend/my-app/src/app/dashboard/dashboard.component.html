@@ -1,0 +1,37 @@
+<div class="flex h-screen bg-[#3D405B]">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  
+  <!-- Main content -->
+  <div class="flex-1 overflow-y-auto">
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-extrabold text-[#f4f1de]">Hello, you</h1>
+        <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-[#3D405B] bg-[#e07a5f] hover:bg-[#d06a4f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e07a5f] transition-colors duration-200"
+        (click)="logout()">
+          <i class="fas fa-sign-out-alt mr-2"></i> Logout
+        </button>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- View Destination Lists Card -->
+        <div class="bg-[#f4f1de] overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:bg-[#e07a5f] group"
+             (click)="viewDestinationLists()">
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-[#3D405B] mb-3 group-hover:text-white transition-colors duration-300">View Destination Lists</h2>
+            <p class="text-[#3D405B] group-hover:text-white transition-colors duration-300">Add specific liked destinations to groups.</p>
+          </div>
+        </div>
+        
+        <!-- Book Destinations Card -->
+        <div class="bg-[#f4f1de] overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:bg-[#e07a5f] group"
+             (click)="bookDestinations()">
+          <div class="p-6">
+            <h2 class="text-xl font-semibold text-[#3D405B] mb-3 group-hover:text-white transition-colors duration-300">Book Destinations</h2>
+            <p class="text-[#3D405B] group-hover:text-white transition-colors duration-300">Book your favorite destinations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="relative h-full">
+  <div [ngClass]="{'w-64': isSidebarVisible, 'w-16': !isSidebarVisible}" 
+       class="h-full flex flex-col bg-gradient-to-b from-[#F4F1DE] to-[#E9E5D2] shadow-lg transition-all duration-300 overflow-hidden">
+    <div class="flex items-center justify-between p-4">
+      <h2 class="text-xl font-bold text-[#3D405B]" [ngClass]="{'hidden': !isSidebarVisible}">TripSync</h2>
+      <button (click)="toggleSidebar()" class="text-[#3D405B] hover:text-[#E07A5F] focus:outline-none p-2 rounded-full hover:bg-[#E07A5F] hover:bg-opacity-20 transition-colors duration-200">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <nav class="flex-1 px-2 py-4">
+      <ul class="space-y-2">
+        <li>
+          <a routerLink="/discover" routerLinkActive="bg-[#E07A5F] text-[#F4F1DE]" 
+             class="flex items-center p-3 rounded-lg text-[#3D405B] hover:bg-[#E07A5F] hover:text-[#F4F1DE] transition-colors duration-200 group">
+            <i class="fas fa-compass text-xl group-hover:scale-110 transition-transform duration-200"></i>
+            <span class="ml-3" [ngClass]="{'hidden': !isSidebarVisible}">Discover</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" 
+             class="flex items-center p-3 rounded-lg text-[#3D405B] hover:bg-[#E07A5F] hover:text-[#F4F1DE] transition-colors duration-200 group">
+            <i class="fas fa-share-alt text-xl group-hover:scale-110 transition-transform duration-200"></i>
+            <span class="ml-3" [ngClass]="{'hidden': !isSidebarVisible}">Share</span>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/dashboard" routerLinkActive="bg-[#E07A5F] text-[#F4F1DE]"
+             class="flex items-center p-3 rounded-lg text-[#3D405B] hover:bg-[#E07A5F] hover:text-[#F4F1DE] transition-colors duration-200 group">
+            <i class="fas fa-user text-xl group-hover:scale-110 transition-transform duration-200"></i>
+            <span class="ml-3" [ngClass]="{'hidden': !isSidebarVisible}">Profile</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

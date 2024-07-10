@@ -1,0 +1,67 @@
+<div class="flex h-screen bg-[#3D405B]">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+  
+    <!-- Main content -->
+    <div class="flex-1 overflow-y-auto">
+      <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-extrabold text-[#f4f1de]">Your Lists</h1>
+          <button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-[#3D405B] bg-[#e07a5f] hover:bg-[#d06a5f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e07a5f] transition-colors duration-200"
+            (click)="addList()">
+            <i class="fas fa-plus mr-2"></i> Add List
+          </button>
+        </div>
+  
+        <!-- Form to add a new list -->
+        <div class="mb-6">
+          <form class="flex items-center space-x-4" (ngSubmit)="onSubmit()">
+            <input type="text" class="px-4 py-2 border border-[#3D405B] rounded-md w-64 focus:outline-none focus:ring-2 focus:ring-[#e07a5f] transition-colors duration-200"
+              placeholder="Enter list name" [(ngModel)]="newListName" name="newListName" required>
+            <button type="submit"
+              class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-[#e07a5f] hover:bg-[#d06a4f] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e07a5f] transition-colors duration-200">
+              Create List
+            </button>
+          </form>
+        </div>
+  
+        <!-- Display created lists -->
+        <div *ngIf="createdLists.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div *ngFor="let list of createdLists" class="bg-[#f4f1de] overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:bg-[#e07a5f] group">
+                <div class="p-6">
+                  <h2 *ngIf="list?.name" class="text-xl font-semibold text-[#3D405B] mb-3 group-hover:text-white transition-colors duration-300">{{ list.name }}</h2>
+              
+                  <select *ngIf="likedDestinations?.length" class="mt-2 px-4 py-2 border border-[#3D405B] rounded-md w-full focus:outline-none focus:ring-2 focus:ring-[#e07a5f] transition-colors duration-200" (change)="addDestinationToList(list.id, $event)">
+                    <option selected disabled>Select a destination to add</option>
+                    <option *ngFor="let destination of likedDestinations" [value]="destination.id">{{ destination.name }}</option>
+                  </select>
+              
+                  <!-- Display destinations in the list -->
+                  <div *ngIf="list.destinations && list.destinations.length > 0" class="mt-4">
+                    <h3 class="text-lg font-semibold text-[#3D405B]">Destinations:</h3>
+                    <ul>
+                      <li *ngFor="let destination of list.destinations" class="text-[#3D405B]">{{ destination.name }}</li>
+                    </ul>
+                  </div>
+                </div>
+            </div>              
+        </div>
+  
+        <!-- Your Saved Destinations Header -->
+        <div class="flex justify-between items-center mb-8 mt-12">
+          <h1 class="text-3xl font-extrabold text-[#f4f1de]">Your Saved Destinations</h1>
+        </div>
+  
+        <!-- Display liked destinations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div *ngFor="let destination of likedDestinations" class="bg-[#f4f1de] overflow-hidden rounded-lg shadow-sm hover:shadow-lg transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:bg-[#e07a5f] group">
+            <div class="p-6">
+              <h2 class="text-xl font-semibold text-[#3D405B] mb-3 group-hover:text-white transition-colors duration-300">{{ destination.name }}</h2>
+              <p class="text-[#3D405B] group-hover:text-white transition-colors duration-300">{{ destination.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
