@@ -1,0 +1,5 @@
+backend/node_modules/
+backend/.env
+frontend/my-app/node_modules/
+frontend/my-app/dist/
+frontend/my-app/.env
