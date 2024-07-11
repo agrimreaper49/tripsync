@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { FirebaseAuthService } from '../firebase-auth.service'; // Make sure to import UserService
-import { DestinationCard } from '../discover/discover.component'; // Import the DestinationCard interface
+import { FirebaseAuthService } from '../firebase-auth.service';
+import { DestinationCard } from '../discover/discover.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,11 +12,12 @@ import { DestinationCard } from '../discover/discover.component'; // Import the 
 export class DashboardComponent implements OnInit {
   likedDestinations: DestinationCard[] = [];
   userId: string | null = null;
+  private backendUrl = 'https://tripsync-backend-drdmpnauna-ue.a.run.app';
 
   constructor(
     private http: HttpClient,
-    private userService: FirebaseAuthService, // Inject UserService
-    private router: Router // Inject Router
+    private userService: FirebaseAuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +29,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getLikedDestinations() {
-    this.http.get(`http://localhost:3000/getLikedDestinations/${this.userId}`).subscribe({
+    this.http.get(`${this.backendUrl}/getLikedDestinations/${this.userId}`).subscribe({
       next: (res: any) => {
         this.likedDestinations = res.likedDestinations || [];
       },
@@ -51,7 +52,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addLikedDestination(card: DestinationCard) {
-    this.http.post('http://localhost:3000/addLikedDestination', { userId: this.userId, destination: card }).subscribe({
+    this.http.post(`${this.backendUrl}/addLikedDestination`, { userId: this.userId, destination: card }).subscribe({
       next: (res) => {
         this.likedDestinations.push(card);
       },
@@ -62,7 +63,7 @@ export class DashboardComponent implements OnInit {
   }
 
   removeLikedDestination(card: DestinationCard) {
-    this.http.post('http://localhost:3000/removeLikedDestination', { userId: this.userId, destination: card }).subscribe({
+    this.http.post(`${this.backendUrl}/removeLikedDestination`, { userId: this.userId, destination: card }).subscribe({
       next: (res) => {
         this.likedDestinations = this.likedDestinations.filter(d => d.name !== card.name);
       },
@@ -74,7 +75,7 @@ export class DashboardComponent implements OnInit {
 
   logout() {
     console.log('Logging out...');
-    this.http.post('http://localhost:3000/signout', {}).subscribe({
+    this.http.post(`${this.backendUrl}/signout`, {}).subscribe({
       next: (res) => {
         console.log('User signed out successfully');
         this.router.navigate(['/sign-in']);
@@ -86,13 +87,10 @@ export class DashboardComponent implements OnInit {
   }
 
   viewDestinationLists() {
-    // Navigate to the destination lists view
     this.router.navigate(['/view-lists']);
   }
 
   bookDestinations() {
-    // Navigate to the book destinations view
     this.router.navigate(['/book-destinations']);
   }
-  
 }

@@ -1,5 +1,4 @@
 export const environment = {
-    production: false,
-    geminiApiKey: 'AIzaSyDqgJLl68YJKtes_jxtyiXMnlXpcaofHZk'
-  };
-  
+  production: false,
+  apiUrl: 'https://us-central1-tripsync-80618.cloudfunctions.net/getEnvVariables'
+};

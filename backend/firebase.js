@@ -14,7 +14,6 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.AUTH_DOMAIN,
@@ -30,9 +29,6 @@ const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
 const db = getFirestore(firebaseApp);
 
-// Initialize Analytics
-// Note: Analytics might not work in a Node.js environment
-// You may need to handle this differently for server-side usage
 let analytics;
 try {
   analytics = getAnalytics(firebaseApp);
@@ -65,23 +61,6 @@ app.post('/signin', async (req, res) => {
   }
 });
 
-// app.post('/signup', async (req, res) => {
-//   const { email, password } = req.body;
-//   try {
-//     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    
-//     // Create a new user document in Firestore
-//     await addDoc(collection(db, 'users'), {
-//       uid: userCredential.user.uid,
-//       email: userCredential.user.email,
-//       createdAt: new Date()
-//     });
-
-//     res.status(201).json({ user: userCredential.user });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// });
 
 app.post('/signup', async (req, res) => {
   const { email, password } = req.body;
@@ -92,8 +71,8 @@ app.post('/signup', async (req, res) => {
     await setDoc(doc(db, 'users', userCredential.user.uid), {
       email: userCredential.user.email,
       createdAt: new Date(),
-      likedDestinations: [], // Initialize empty array for liked destinations
-      lists: [] // Initialize empty array for lists
+      likedDestinations: [],
+      lists: []
     });
 
     res.status(201).json({ user: userCredential.user });
@@ -103,7 +82,6 @@ app.post('/signup', async (req, res) => {
 });
 
 
-// Sign out route
 app.post('/signout', async (req, res) => {
   try {
     await signOut(auth);
@@ -113,7 +91,6 @@ app.post('/signout', async (req, res) => {
   }
 });
 
-// Add a liked destination
 app.post('/addLikedDestination', async (req, res) => {
   const { userId, destination } = req.body;
   try {
@@ -128,7 +105,6 @@ app.post('/addLikedDestination', async (req, res) => {
   }
 });
 
-// Remove a liked destination
 app.post('/removeLikedDestination', async (req, res) => {
   const { userId, destination } = req.body;
   try {
@@ -143,7 +119,6 @@ app.post('/removeLikedDestination', async (req, res) => {
   }
 });
 
-// Get liked destinations for a user
 app.get('/getLikedDestinations/:userId', async (req, res) => {
   const userId = req.params.userId;
   try {
@@ -175,7 +150,7 @@ app.post('/updateUserLists', async (req, res) => {
 
       const updatedLists = (userData.lists || []).map(list => {
         if (!list.id) {
-          list.id = uuidv4(); // Add a unique ID to lists without an ID
+          list.id = uuidv4();
         }
         return list;
       });
@@ -211,12 +186,12 @@ app.post('/addList', async (req, res) => {
       console.log('User data:', userData);
 
       const newList = {
-        id: uuidv4(), // Generate a unique ID for the new list
+        id: uuidv4(),
         name: listName,
         destinations: []
       };
 
-      console.log('id:', uuidv4()); // Log the new list object
+      console.log('id:', uuidv4());
 
       const updatedLists = [...(userData.lists || []), newList];
       await updateDoc(userRef, { lists: updatedLists });
@@ -265,7 +240,6 @@ app.post('/addDestinationToList', async (req, res) => {
 
 
 
-// Route to get all lists for a user
 app.get('/getLists/:userId', async (req, res) => {
   const userId = req.params.userId;
   try {
@@ -285,8 +259,6 @@ app.get('/getLists/:userId', async (req, res) => {
 });
 
 
-
-// Add more routes for other Firebase operations (addUser, getUsers, etc.) as needed
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

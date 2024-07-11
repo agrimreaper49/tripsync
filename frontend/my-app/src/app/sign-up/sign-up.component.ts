@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FirebaseAuthService } from '../firebase-auth.service'; // Import UserService
 
-
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -13,6 +12,7 @@ export class SignUpComponent {
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
+  private backendUrl = 'https://tripsync-backend-drdmpnauna-ue.a.run.app';
 
   constructor(private http: HttpClient, private router: Router, private userService: FirebaseAuthService) {}
 
@@ -22,7 +22,7 @@ export class SignUpComponent {
       return;
     }
 
-    this.http.post('http://localhost:3000/signup', { email: this.email, password: this.password })
+    this.http.post(`${this.backendUrl}/signup`, { email: this.email, password: this.password })
       .subscribe({
         next: (response: any) => {
           console.log('User registered successfully', response);

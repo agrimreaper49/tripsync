@@ -11,11 +11,12 @@ import { FirebaseAuthService } from '../firebase-auth.service'; // Import UserSe
 export class SignInComponent {
   email: string = '';
   password: string = '';
+  private backendUrl = 'https://tripsync-backend-drdmpnauna-ue.a.run.app';
 
   constructor(private http: HttpClient, private router: Router, private userService: FirebaseAuthService) {}
 
   onSignIn() {
-    this.http.post('http://localhost:3000/signin', { email: this.email, password: this.password })
+    this.http.post(`${this.backendUrl}/signin`, { email: this.email, password: this.password })
       .subscribe({
         next: (response: any) => {
           console.log('User signed in:', response.user);

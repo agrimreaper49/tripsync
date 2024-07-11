@@ -19,6 +19,7 @@ export class ViewListsComponent implements OnInit {
   createdLists: List[] = [];
   newListName: string = '';
   userId: string | null = null;
+  private backendUrl = 'https://tripsync-backend-drdmpnauna-ue.a.run.app';
 
   constructor(
     private http: HttpClient,
@@ -36,7 +37,7 @@ export class ViewListsComponent implements OnInit {
   }
 
   updateUserLists(userId: string): void {
-    this.http.post<any>('http://localhost:3000/updateUserLists', { userId }).subscribe({
+    this.http.post<any>(`${this.backendUrl}/updateUserLists`, { userId }).subscribe({
       next: (res) => {
         console.log('User lists updated successfully:', res);
         // Optionally update local state if needed
@@ -50,7 +51,7 @@ export class ViewListsComponent implements OnInit {
 
   getLikedDestinations() {
     if (this.userId) {
-      this.http.get(`http://localhost:3000/getLikedDestinations/${this.userId}`).subscribe({
+      this.http.get(`${this.backendUrl}/getLikedDestinations/${this.userId}`).subscribe({
         next: (res: any) => {
           this.likedDestinations = res.likedDestinations || [];
         },
@@ -63,7 +64,7 @@ export class ViewListsComponent implements OnInit {
 
   fetchCreatedLists() {
     if (this.userId) {
-      this.http.get<any[]>(`http://localhost:3000/getLists/${this.userId}`).subscribe({
+      this.http.get<any[]>(`${this.backendUrl}/getLists/${this.userId}`).subscribe({
         next: (lists) => {
           this.createdLists = lists.map(list => ({
             ...list,
@@ -80,11 +81,10 @@ export class ViewListsComponent implements OnInit {
       console.error('User ID is not defined');
     }
   }
-  
 
   addList() {
     if (this.userId && this.newListName.trim() !== '') {
-      this.http.post<any>('http://localhost:3000/addList', { userId: this.userId, listName: this.newListName }).subscribe({
+      this.http.post<any>(`${this.backendUrl}/addList`, { userId: this.userId, listName: this.newListName }).subscribe({
         next: (res) => {
           console.log('List added successfully:', res);
           const newList = res.list; // Use the new list object returned from the server
@@ -98,26 +98,26 @@ export class ViewListsComponent implements OnInit {
       });
     }
   }
-  
+
   addDestinationToList(listId: string, event: Event) {
     console.log('Selected list ID:', listId); // Log list ID to verify it's not empty
-  
+
     if (this.userId && listId) { // Check if listId is not empty
       const selectElement = event.target as HTMLSelectElement;
       const selectedDestinationId = selectElement.value;
-  
+
       console.log('Selected destination ID:', selectedDestinationId);
-  
+
       const destination = this.likedDestinations.find(d => d.id === selectedDestinationId);
-  
+
       if (destination) {
         console.log('Selected destination:', destination);
-  
+
         const listToUpdate = this.createdLists.find(list => list.id === listId);
         console.log('List to update:', listToUpdate);
-  
+
         if (listToUpdate) {
-          this.http.post<any>('http://localhost:3000/addDestinationToList', { userId: this.userId, listId, destination }).subscribe({
+          this.http.post<any>(`${this.backendUrl}/addDestinationToList`, { userId: this.userId, listId, destination }).subscribe({
             next: (res) => {
               console.log('Destination added to list successfully:', res);
               if (!listToUpdate.destinations) {
@@ -140,6 +140,7 @@ export class ViewListsComponent implements OnInit {
       console.error('Invalid list ID:', listId);
     }
   }
+
   onSubmit() {
     this.addList();
   }

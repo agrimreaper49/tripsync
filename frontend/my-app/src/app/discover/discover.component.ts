@@ -11,7 +11,6 @@ export interface DestinationCard {
   isLiked?: boolean;
 }
 
-
 interface List {
   id: string;
   name: string;
@@ -28,6 +27,8 @@ export class DiscoverComponent implements OnInit {
   isLoading = false;
   userId: string | null = null;
   userLists: List[] = [];
+
+  private backendUrl = 'https://tripsync-backend-drdmpnauna-ue.a.run.app';
 
   constructor(
     private geminiService: GeminiService,
@@ -71,7 +72,7 @@ export class DiscoverComponent implements OnInit {
   }
 
   addLikedDestination(card: DestinationCard) {
-    this.http.post('http://localhost:3000/addLikedDestination', { userId: this.userId, destination: card }).subscribe({
+    this.http.post(`${this.backendUrl}/addLikedDestination`, { userId: this.userId, destination: card }).subscribe({
       next: (res) => {
         console.log('Destination liked:', res);
       },
@@ -80,9 +81,9 @@ export class DiscoverComponent implements OnInit {
       }
     });
   }
-  
+
   removeLikedDestination(card: DestinationCard) {
-    this.http.post('http://localhost:3000/removeLikedDestination', { userId: this.userId, destination: card }).subscribe({
+    this.http.post(`${this.backendUrl}/removeLikedDestination`, { userId: this.userId, destination: card }).subscribe({
       next: (res) => {
         console.log('Destination unliked:', res);
       },
@@ -91,9 +92,9 @@ export class DiscoverComponent implements OnInit {
       }
     });
   }
-  
+
   getLikedDestinations() {
-    this.http.get(`http://localhost:3000/getLikedDestinations/${this.userId}`).subscribe({
+    this.http.get(`${this.backendUrl}/getLikedDestinations/${this.userId}`).subscribe({
       next: (res: any) => {
         const likedDestinations = res.likedDestinations;
         this.destinationCards = this.destinationCards.map(card => ({
@@ -108,7 +109,7 @@ export class DiscoverComponent implements OnInit {
   }
 
   getUserLists() {
-    this.http.get<List[]>(`http://localhost:3000/getLists/${this.userId}`).subscribe({
+    this.http.get<List[]>(`${this.backendUrl}/getLists/${this.userId}`).subscribe({
       next: (lists) => {
         this.userLists = lists;
       },
@@ -121,7 +122,7 @@ export class DiscoverComponent implements OnInit {
   addDestinationToList(destination: DestinationCard, listId: string) {
     if (!this.userId) return;
 
-    this.http.post('http://localhost:3000/addDestinationToList', { userId: this.userId, listId, destination }).subscribe({
+    this.http.post(`${this.backendUrl}/addDestinationToList`, { userId: this.userId, listId, destination }).subscribe({
       next: (res) => {
         console.log('Destination added to list:', res);
         // Optionally, update the local list data
