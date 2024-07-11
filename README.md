@@ -1,6 +1,6 @@
 # TripSync ✈️
 
-TripSync is an AI-powered travel destination recommender and booker. Built using Angular, Express, Node.js, Tailwind, Gemini, Firebase, and Google Cloud Platform, our platform offers personalized travel suggestions and seamless booking experiences.
+TripSync is an AI-powered travel destination recommender and booker. Built using Angular, Express, Node.js, Tailwind, Gemini, Firebase, Google Cloud Platform, and Docker. Our platform offers personalized travel suggestions and seamless booking experiences.
 
 ## Usage
 
@@ -8,12 +8,13 @@ Navigate to https://tripsync-80618.web.app/sign-in. Create an account and begin 
 
 ## Tech Stack
 - Angular
+- Express
 - Node.js
-- Firebase
-- Google Cloud Platform
-- Firebase
 - Tailwind
 - Gemini API
+- Firebase
+- Google Cloud Platform
+- Docker
 
 ## Features
 - [x] Create an account and find destinations using an LLM
