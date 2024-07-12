@@ -20,7 +20,7 @@ export class SignInComponent {
       .subscribe({
         next: (response: any) => {
           console.log('User signed in:', response.user);
-          this.userService.setUser(response.user); // Store user in UserService
+          this.userService.setUser(response.user);
           if (response.newUser) {
             console.log('New user created in Firestore');
           }

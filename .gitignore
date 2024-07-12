@@ -3,3 +3,12 @@ backend/.env
 frontend/my-app/node_modules/
 frontend/my-app/dist/
 frontend/my-app/.env
+frontend/my-app/src/environments
+frontend/my-app/functions
+
+
+/.idea
+/.vscode
+/.history
+.DS_Store
+/*.log

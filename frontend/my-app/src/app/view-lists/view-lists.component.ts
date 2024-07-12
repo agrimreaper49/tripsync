@@ -87,10 +87,10 @@ export class ViewListsComponent implements OnInit {
       this.http.post<any>(`${this.backendUrl}/addList`, { userId: this.userId, listName: this.newListName }).subscribe({
         next: (res) => {
           console.log('List added successfully:', res);
-          const newList = res.list; // Use the new list object returned from the server
+          const newList = res.list;
           console.log('ID of new list: ', newList.id)
-          this.createdLists.push(newList); // Update the local state with the new list
-          this.newListName = ''; // Clear the input field
+          this.createdLists.push(newList);
+          this.newListName = '';
         },
         error: (err) => {
           console.error('Error adding list:', err);
@@ -100,9 +100,9 @@ export class ViewListsComponent implements OnInit {
   }
 
   addDestinationToList(listId: string, event: Event) {
-    console.log('Selected list ID:', listId); // Log list ID to verify it's not empty
+    console.log('Selected list ID:', listId);
 
-    if (this.userId && listId) { // Check if listId is not empty
+    if (this.userId && listId) {
       const selectElement = event.target as HTMLSelectElement;
       const selectedDestinationId = selectElement.value;
 

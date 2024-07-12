@@ -125,7 +125,6 @@ export class DiscoverComponent implements OnInit {
     this.http.post(`${this.backendUrl}/addDestinationToList`, { userId: this.userId, listId, destination }).subscribe({
       next: (res) => {
         console.log('Destination added to list:', res);
-        // Optionally, update the local list data
         const updatedList = this.userLists.find(list => list.id === listId);
         if (updatedList) {
           updatedList.destinations.push(destination);
@@ -138,7 +137,6 @@ export class DiscoverComponent implements OnInit {
   }
 
   private generateUniqueId(): string {
-    // Simple implementation, consider using a more robust method in production
     return Math.random().toString(36).substr(2, 9);
   }
 }
