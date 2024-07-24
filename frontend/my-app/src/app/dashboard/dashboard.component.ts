@@ -91,6 +91,6 @@ export class DashboardComponent implements OnInit {
   }
 
   bookDestinations() {
-    this.router.navigate(['/book-destinations']);
+    this.router.navigate(['/dashboard']);
   }
 }

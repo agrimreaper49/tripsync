@@ -46,6 +46,7 @@ export class DiscoverComponent implements OnInit {
   }
 
   searchDestinations(searchTerm: string) {
+    console.log('Search button clicked, search term:', searchTerm); // Add this line
     this.isLoading = true;
     this.geminiService.getDestinationRecommendations(10, searchTerm).subscribe({
       next: (data: DestinationCard[]) => {

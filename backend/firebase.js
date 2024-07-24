@@ -8,8 +8,6 @@ const { getAnalytics } = require('firebase/analytics');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
-
-
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());

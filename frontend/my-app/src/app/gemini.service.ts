@@ -28,7 +28,7 @@ export class GeminiService {
       map(response => response.geminiApiKey),
       catchError(error => {
         console.error('Error fetching API key:', error);
-        return of(''); // Return an empty string or handle it appropriately
+        return of(''); 
       })
     );
   }
@@ -37,6 +37,8 @@ export class GeminiService {
     if (!this.geminiApiKey) {
       return of([]); // Return an empty array if the API key is not available yet
     }
+    console.log('Gemini API Key loaded:', this.geminiApiKey); // Add this line
+
 
     const model = this.genAI.getGenerativeModel({ model: "gemini-pro" });
     let prompt = `Generate ${count} unique travel destination recommendations. Return the response as a raw JSON array of objects, without any markdown formatting such as json, this is very important. Each object should have 'name', 'description', and 'image' properties.`;
